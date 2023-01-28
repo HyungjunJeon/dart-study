@@ -52,4 +52,80 @@ void main() {
   const name8 = 'hyungjun';
   // 상수이므로 값 변경 불가
   // name8 = 'jun';
+
+  // 기본 자료형들은 다음과 같은 것들이 있으며 모두 object
+  String name9 = "hyungjun";
+  bool alive = true;
+  int age = 12;
+  double money = 69.99;
+  // num은 정수, 실수 모두 가능
+  num x = 12;
+  x = 1.1;
+
+  // 리스트 선언
+  // 마지막에 ,를 추가하면 요소당 한 줄씩 자동 포맷팅해줌
+  var numbers = [
+    1,
+    2,
+    3,
+    4,
+  ];
+  List<int> numbers2 = [
+    1,
+    2,
+    3,
+    4,
+  ];
+
+  // collection if
+  // 아래는 numbers3가 [1, 2, 3, 4,]일 떄 if (giveMeFive) { numbers3.add(5) }와 동일
+  var giveMeFive = true;
+  var numbers3 = [
+    1,
+    2,
+    3,
+    4,
+    if (giveMeFive) 5,
+  ];
+  print(numbers3);
+
+  // String Interpolation은 text에 변수를 추가하는 방법
+  var name10 = 'hyungjun';
+  var age2 = 10;
+  var greeting = "Hello everyone, my name is $name10 and I'm ${age2 + 2}";
+  print(greeting);
+
+  // collection for
+  var oldFriends = ['nico', 'lynn'];
+  var newFriends = [
+    'lewis',
+    'ralph',
+    'darren',
+    for (var friend in oldFriends) "💖 $friend",
+  ];
+  print(newFriends);
+
+  // Maps
+  // 아래와 같이 선언 시 key와 value의 type은 컴파일러가 알아서 추론
+  // Object type은 typescript의 any와 같음
+  var player = {
+    'name': 'nico',
+    'xp': 19.99,
+    'superpower': false,
+  };
+  // 아래와 같이 type을 지정해서 비어있는 상태로도 선언 가능
+  Map<int, bool> player2 = {};
+  // 다음과 같이 복잡한 type을 가지도록 선언하는 것도 가능
+  Map<List<int>, bool> player3 = {};
+
+  // Sets
+  var numbers4 = {1, 2, 3, 4};
+  Set<int> numbers5 = {1, 2, 3, 4};
+  // 이렇게하면 추가되지 않음
+  // Set은 순서가 있고 요소들이 유니크해야하기 때문
+  // Python의 Tuple과 같다
+  numbers5.add(1);
+  numbers5.add(1);
+  numbers5.add(1);
+  print(numbers5);
 }
