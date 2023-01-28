@@ -128,4 +128,79 @@ void main() {
   numbers5.add(1);
   numbers5.add(1);
   print(numbers5);
+
+  sayHello('nico');
+  print(sayHello2('nico'));
+  print(sayHello3('nico'));
+  print(sayHello4(age: 19, country: 'cuba', name: 'nico'));
+  print(sayHello5(age: 19, country: 'cuba', name: 'nico'));
+  var result = sayHello6('nico', 12);
+  print(result);
+
+  capitalizeName('nico'); // NICO
+  capitalizeName(null);
+
+  // QQ equals (QQ assignment operator)
+  String? name11;
+  name11 ??= 'nico';
+  print(name11);
+
+  print(reverseListOfNumbers([1, 2, 3]));
+
+  print(sayHi({'name': 'nico'}));
+}
+
+// 함수 정의
+// void는 아무것도 return 하지 않는다는 의미
+void sayHello(String name) {
+  print("Hello $name nice to meet you!");
+}
+
+// type 지정 시 해당 type 값 return
+String sayHello2(String name) {
+  return "Hello $name nice to meet you!";
+}
+
+// 특정 값 return 함수는 다음과 같이도 선언 가능
+String sayHello3(String name) => "Hello $name nice to meet you!";
+num plus(num a, num b) => a + b;
+
+// named argument
+// Null Safety를 위해 기본값 지정 필요
+String sayHello4({
+  String name = 'anon',
+  int age = 99,
+  String country = 'wakanda',
+}) {
+  return "Hello $name, you are $age, and you come from $country";
+}
+
+// 기본값을 지정하지 않고 required 키워드를 사용해도 된다
+String sayHello5({
+  required String name,
+  required int age,
+  required String country,
+}) {
+  return "Hello $name, you are $age, and you come from $country";
+}
+
+// Optional Positional Parameters
+// 대괄호로 감싸고 ?을 붙여 null이 될 수 있음을 알려주며 기본값을 부여해야 함
+String sayHello6(String name, int age, [String? country = 'cuba']) =>
+    "Hello $name, you are $age years old from $country";
+
+// QQ Operator
+String capitalizeName(String? name) => name?.toUpperCase() ?? 'ANON';
+
+// typedef
+typedef ListOfInts = List<int>;
+ListOfInts reverseListOfNumbers(ListOfInts list) {
+  var reversed = list.reversed;
+  return reversed.toList();
+}
+
+// 아래와 같이 structured data에 적용하더라도 동작은 하지만 이런경우 class를 만드는 것을 추천
+typedef UserInfo = Map<String, String>;
+String sayHi(UserInfo userInfo) {
+  return "Hi ${userInfo['name']}";
 }
