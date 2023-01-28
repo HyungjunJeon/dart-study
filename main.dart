@@ -148,6 +148,79 @@ void main() {
   print(reverseListOfNumbers([1, 2, 3]));
 
   print(sayHi({'name': 'nico'}));
+
+  // new 키워드를 사용할 수 있지만 필수 아님
+  var player4 = Player();
+  print(player4.name);
+  // Class 멤버 변수를 final로 선언하면 값 변경 불가
+  // player4.name = 'lalalala';
+  // print(player4.name);
+  player4.sayHello();
+
+  var player5 = Player2("lynn", 2500);
+  player5.sayHello();
+
+  var player6 = Player3(
+    name: "nico",
+    xp: 1200,
+    team: "blue",
+    age: 21,
+  );
+  player6.sayHello();
+  var player7 = Player3(
+    name: 'lynn',
+    xp: 2500,
+    team: 'blue',
+    age: 12,
+  );
+  player7.sayHello();
+
+  var bluePlayer = Player4.createBluePlayer(name: 'nico', age: 21);
+  var redPlayer = Player4.createRedPlayer('lynn', 12);
+
+  var apiData = [
+    {
+      "name": "nico",
+      "team": "red",
+      "xp": 0,
+    },
+    {
+      "name": "lynn",
+      "team": "red",
+      "xp": 0,
+    },
+    {
+      "name": "dal",
+      "team": "red",
+      "xp": 0,
+    },
+  ];
+
+  apiData.forEach((playerJson) {
+    var player8 = Player5.fromJson(playerJson);
+    player8.sayHello();
+  });
+
+  var nico = Player6(name: 'nico', xp: 1200, team: 'red');
+  var potato = nico
+    ..name = 'las'
+    ..xp = 1200000
+    ..team = 'blue'
+    ..sayHello();
+
+  var nico2 = Player7(
+    name: 'nico',
+    xp: XPLevel.medium,
+    team: Team.red,
+  );
+  var potato2 = nico2
+    ..name = 'las'
+    ..xp = XPLevel.pro
+    ..team = Team.blue
+    ..sayHello();
+
+  var player9 = Player9(team: Team.red, name: 'nico');
+  player9.sayHello();
 }
 
 // 함수 정의
@@ -204,3 +277,214 @@ typedef UserInfo = Map<String, String>;
 String sayHi(UserInfo userInfo) {
   return "Hi ${userInfo['name']}";
 }
+
+// Class
+class Player {
+  final String name = 'nico';
+  int xp = 1500;
+
+  void sayHello() {
+    // Dart의 Class에서는 this를 붙이지않고 멤버 변수 접근 가능
+    // 메소드 안에 멤버변수와 같은 이름의 변수 선언이 가능한데 이 때 멤버변수 접근 시 this 붙여야함
+    print("Hi my name is $name");
+  }
+}
+
+// Constructor Method
+class Player2 {
+  final String name;
+  int xp;
+
+  // 위치 중요
+  Player2(this.name, this.xp);
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+// Named Constructor Parameters
+class Player3 {
+  final String name;
+  int xp;
+  String team;
+  int age;
+
+  Player3(
+      {required this.name,
+      required this.xp,
+      required this.team,
+      required this.age});
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+// Named Constructor
+class Player4 {
+  final String name;
+  int xp, age;
+  String team;
+
+  Player4(
+      {required this.name,
+      required this.xp,
+      required this.team,
+      required this.age});
+
+  Player4.createBluePlayer({
+    required String name,
+    required int age,
+  })  : this.age = age,
+        this.name = name,
+        this.team = 'blue',
+        this.xp = 0;
+
+  // 이렇게하면 Positional이며 required
+  Player4.createRedPlayer(String name, int age)
+      : this.age = age,
+        this.name = name,
+        this.team = 'red',
+        this.xp = 0;
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+class Player5 {
+  final String name;
+  int xp;
+  String team;
+
+  Player5.fromJson(Map<String, dynamic> playerJson)
+      : name = playerJson['name'],
+        xp = playerJson['xp'],
+        team = playerJson['team'];
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+// Cascade Notation
+class Player6 {
+  String name;
+  int xp;
+  String team;
+
+  Player6({required this.name, required this.xp, required this.team});
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+// Enum
+enum Team { red, blue }
+
+enum XPLevel { beginner, medium, pro }
+
+class Player7 {
+  String name;
+  XPLevel xp;
+  Team team;
+
+  Player7({required this.name, required this.xp, required this.team});
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+// Abstract Class
+// 절대 이렇게 작성할 일 없음
+// 다른 클래스들이 직접 구현할 메소드들을 모아놓은 일종의 청사진
+abstract class Human {
+  void walk();
+}
+
+// 사용하려면 다음처럼 하면 됨
+class Player8 extends Human {
+  String name;
+  XPLevel xp;
+  Team team;
+
+  Player8({required this.name, required this.xp, required this.team});
+
+  void walk() {
+    print('Im walking');
+  }
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+class Coach extends Human {
+  void walk() {
+    print('The coach is walking');
+  }
+}
+
+// Inheritance
+class Human2 {
+  final String name;
+
+  Human2({required this.name});
+
+  void sayHello() {
+    print("Hi my name is $name");
+  }
+}
+
+class Player9 extends Human2 {
+  final Team team;
+
+  Player9({
+    required this.team,
+    required String name,
+  }) : super(name: name);
+
+  @override
+  void sayHello() {
+    super.sayHello();
+    print("and I play for ${team}");
+  }
+}
+
+// Mixins
+// Constructor가 없는 Class
+// 여러번 재사용 가능
+class Strong {
+  final double strengthLevel = 1500.99;
+}
+
+class QuickRunner {
+  void runQuick() {
+    print("ruuuuuuuuuuuun!");
+  }
+}
+
+class Tall {
+  final double height = 1.99;
+}
+
+class Player10 with Strong, QuickRunner, Tall {
+  final Team team;
+
+  Player10({
+    required this.team,
+    required String name,
+  });
+
+  @override
+  void sayHello() {
+    print("and I play for ${team}");
+  }
+}
+
+class Horse with Strong, QuickRunner {}
+
+class Kid with QuickRunner {}
